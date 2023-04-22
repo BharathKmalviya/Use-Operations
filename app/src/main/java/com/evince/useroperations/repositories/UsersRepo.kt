@@ -19,7 +19,6 @@ class UsersRepo @Inject constructor(
     private val appDatabase: AppDatabase
 ) {
 
-
     suspend fun getUsers(page:String): Resource<UsersListModel>  = withContext(Dispatchers.IO){
         val params = HashMap<String, String>()
         params["page"] = page
@@ -29,11 +28,12 @@ class UsersRepo @Inject constructor(
 
         appDatabase.usersDao().insertUserAll(response.data?.data.orEmpty())
         val list = appDatabase.usersDao().getAllUsers()
-        response.data?.data = ArrayList(list)
 
         return@withContext  if (response.message == context.getString(R.string.no_internet_connection)){
-            Resource.success(response.data)
+            val model = UsersListModel(data = ArrayList(list))
+            Resource.success(model)
         }else{
+            response.data?.data = ArrayList(list)
             response
         }
     }
@@ -49,8 +49,14 @@ class UsersRepo @Inject constructor(
         params["last_name"] = lastName
         params["email"] = email
         val url = "https://reqres.in/api/users/$id"
-        return@withContext context.safeApiCall(UserModel::class.java) {
+        val response =  context.safeApiCall(UserModel::class.java) {
             apiServices.updateUser(url,params)
+        }
+
+        return@withContext  if (response.message == context.getString(R.string.no_internet_connection)){
+            Resource.success(UserModel())
+        }else{
+            response
         }
     }
 
@@ -58,8 +64,14 @@ class UsersRepo @Inject constructor(
         id:String,
     ): Resource<UserModel>  = withContext(Dispatchers.IO){
         val url = "https://reqres.in/api/users/$id"
-        return@withContext context.safeApiCall(UserModel::class.java) {
+        val response =  context.safeApiCall(UserModel::class.java) {
             apiServices.deleteUser(url)
+        }
+
+        return@withContext  if (response.message == context.getString(R.string.no_internet_connection)){
+            Resource.success(UserModel())
+        }else{
+            response
         }
     }
 }
