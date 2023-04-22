@@ -90,5 +90,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadData() {
         mViewModel.getUsersList("1")
+        mViewModel.getUsersList("2")
     }
 }
