@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">User Operations</string>
+
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="default_error_message">something went wrong</string>
+
+    <string name="email">Email</string>
+    <string name="lastname">Lastname</string>
+    <string name="firstname">Firstname</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="user_updated_successfully">User updated successfully</string>
+    <string name="user_deleted_successfully">User deleted successfully</string>
+</resources>
