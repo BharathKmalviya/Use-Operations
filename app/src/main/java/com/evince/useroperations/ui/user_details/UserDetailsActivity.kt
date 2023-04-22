@@ -189,7 +189,6 @@ class UserDetailsActivity : AppCompatActivity() {
 
     private fun loadData() {
         binding.model = mUserModel
-        binding.btnDownload.isVisible = isConnectedToInternet(this)
     }
 
     private fun onDownload() {
